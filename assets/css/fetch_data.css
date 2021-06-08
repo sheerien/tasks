@@ -1,3 +1,7 @@
+.app {
+    position: relative;
+}
+
 .app .app-img {
     width: 300px;
     height: 300px;
@@ -13,6 +17,7 @@
 .app .app-content .app-title {
     text-align: center;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 .app .app-content .app-desc {
@@ -20,4 +25,30 @@
     text-align: center;
     padding: 0 10px;
     margin-bottom: 15px;
+}
+
+.app .row {
+    position: relative;
+    /* z-index: 0; */
+}
+
+#box-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0, 0);
+}
+
+#box-popup #popup {
+    background-image: url("https://via.placeholder.com/300x300");
+    width: 50%;
+    height: 450px;
+    background-size: cover;
+    background-position: center;
 }

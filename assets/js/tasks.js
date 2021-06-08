@@ -1,6 +1,10 @@
 var baseApi = "https://api.github.com/users";
 var rowApp = document.getElementById("app-row");
-// create html template
+var boxPopup = document.getElementById("box-popup");
+var popup = document.getElementById("popup");
+
+var data = []
+    // create html template
 function templateData(data) {
     return template = `<div class="col">
     <div class="app-img">
@@ -8,7 +12,7 @@ function templateData(data) {
     </div>
     <div class="app-content">
         <div class="app-title">
-            <h1>${data.login}</h1>
+            <h1 id="${data.id}">${data.login}</h1>
         </div>
     </div>
     </div>
@@ -16,26 +20,62 @@ function templateData(data) {
     `;
 }
 
-function fetchData(url) {
+
+function fetchData(tempHtml, url) {
     var req = new XMLHttpRequest();
     var temp = ""
     req.onreadystatechange = () => {
         if (req.readyState == 4 && req.status == 200) {
-            var data = JSON.parse(req.response);
+            data = JSON.parse(req.response);
             for (var i = 0; i < data.length; i++) {
                 temp += templateData(data[i])
 
+
             }
-            rowApp.innerHTML = temp;
+            tempHtml.innerHTML = temp;
+            var tagElements = document.getElementsByTagName("h1")
+            var tagArray = Array.from(tagElements);
+            for (let i = 0, len = tagArray.length; i < len; i++) {
+                tagArray[i].addEventListener("click", getInfo);
+            }
         }
-
-
     }
 
     req.open("GET", url);
     req.send();
 }
 
-window.onload = function() {
-    fetchData(baseApi)
+
+function getInfo(e) {
+    var row = document.getElementById(e.target.id);
+
+    console.log(row.textContent);
+    try {
+        var userName = row.textContent
+        fetchUserData(baseApi, userName);
+
+    } catch (error) {
+        console.log(error)
+    }
+
 }
+
+function fetchUserData(url, userName) {
+    var userReq = new XMLHttpRequest();
+    userReq.onreadystatechange = function() {
+        if (userReq.readyState == 4 && userReq.status == 200) {
+            var personData = JSON.parse(userReq.response);
+            console.log(personData);
+            boxPopup.style.transform = "scale(1, 1)"
+            popup.style.backgroundImage = `url(${personData.avatar_url})`
+        }
+    }
+    console.log(`${url}/${userName}`)
+    userReq.open("GET", `${url}/${userName}`);
+    userReq.send();
+}
+
+(function() {
+    fetchData(rowApp, baseApi)
+
+})();
