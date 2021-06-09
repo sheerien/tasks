@@ -2,7 +2,7 @@ var baseApi = "https://api.github.com/users";
 var rowApp = document.getElementById("app-row");
 var boxPopup = document.getElementById("box-popup");
 var popup = document.getElementById("popup");
-
+var req = new XMLHttpRequest();
 // var data = []
 // create html template
 function templateData(data) {
@@ -21,8 +21,8 @@ function templateData(data) {
 }
 
 
-function fetchAllData(tempHtml, url) {
-    var req = new XMLHttpRequest();
+function fetchAllData(req, tempHtml, url) {
+    // var req = new XMLHttpRequest();
     var temp = ""
     req.onreadystatechange = () => {
         if (req.readyState == 4 && req.status == 200) {
@@ -49,7 +49,7 @@ function fetchAllData(tempHtml, url) {
 function getInfo(e) {
     console.log(e.target.textContent);
     try {
-        fetchUserData(baseApi, e.target.textContent);
+        fetchUserData(req, baseApi, e.target.textContent);
 
     } catch (error) {
         console.log(error)
@@ -57,22 +57,22 @@ function getInfo(e) {
 
 }
 
-function fetchUserData(url, userName) {
-    var userReq = new XMLHttpRequest();
-    userReq.onreadystatechange = function() {
-        if (userReq.readyState == 4 && userReq.status == 200) {
-            var personData = JSON.parse(userReq.response);
+function fetchUserData(req, url, userName) {
+    // var userReq = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            var personData = JSON.parse(req.response);
             console.log(personData);
-            boxPopup.style.transform = "scale(1, 1)"
-            popup.style.backgroundImage = `url(${personData.avatar_url})`
+            // boxPopup.style.transform = "scale(1, 1)"
+            // popup.style.backgroundImage = `url(${personData.avatar_url})`
         }
     }
     console.log(`${url}/${userName}`)
-    userReq.open("GET", `${url}/${userName}`);
-    userReq.send();
+    req.open("GET", `${url}/${userName}`);
+    req.send();
 }
 
 (function() {
-    fetchAllData(rowApp, baseApi)
+    fetchAllData(req, rowApp, baseApi)
 
 })();
