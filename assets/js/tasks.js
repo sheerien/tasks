@@ -3,8 +3,8 @@ var rowApp = document.getElementById("app-row");
 var boxPopup = document.getElementById("box-popup");
 var popup = document.getElementById("popup");
 
-var data = []
-    // create html template
+// var data = []
+// create html template
 function templateData(data) {
     return template = `<div class="col">
     <div class="app-img">
@@ -12,7 +12,7 @@ function templateData(data) {
     </div>
     <div class="app-content">
         <div class="app-title">
-            <h1 id="${data.id}">${data.login}</h1>
+            <h1>${data.login}</h1>
         </div>
     </div>
     </div>
@@ -21,12 +21,12 @@ function templateData(data) {
 }
 
 
-function fetchData(tempHtml, url) {
+function fetchAllData(tempHtml, url) {
     var req = new XMLHttpRequest();
     var temp = ""
     req.onreadystatechange = () => {
         if (req.readyState == 4 && req.status == 200) {
-            data = JSON.parse(req.response);
+            var data = JSON.parse(req.response);
             for (var i = 0; i < data.length; i++) {
                 temp += templateData(data[i])
 
@@ -47,12 +47,9 @@ function fetchData(tempHtml, url) {
 
 
 function getInfo(e) {
-    var row = document.getElementById(e.target.id);
-
-    console.log(row.textContent);
+    console.log(e.target.textContent);
     try {
-        var userName = row.textContent
-        fetchUserData(baseApi, userName);
+        fetchUserData(baseApi, e.target.textContent);
 
     } catch (error) {
         console.log(error)
@@ -76,6 +73,6 @@ function fetchUserData(url, userName) {
 }
 
 (function() {
-    fetchData(rowApp, baseApi)
+    fetchAllData(rowApp, baseApi)
 
 })();
