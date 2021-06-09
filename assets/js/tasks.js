@@ -3,7 +3,7 @@ var rowApp = document.getElementById("app-row");
 var boxPopup = document.getElementById("box-popup");
 var popup = document.getElementById("popup");
 var req = new XMLHttpRequest();
-// var data = []
+
 // create html template
 function templateData(data) {
     return template = `<div class="col">
@@ -20,17 +20,13 @@ function templateData(data) {
     `;
 }
 
-
 function fetchAllData(req, tempHtml, url) {
-    // var req = new XMLHttpRequest();
     var temp = ""
     req.onreadystatechange = () => {
         if (req.readyState == 4 && req.status == 200) {
             var data = JSON.parse(req.response);
             for (var i = 0; i < data.length; i++) {
                 temp += templateData(data[i])
-
-
             }
             tempHtml.innerHTML = temp;
             var tagElements = document.getElementsByTagName("h1")
@@ -40,7 +36,6 @@ function fetchAllData(req, tempHtml, url) {
             }
         }
     }
-
     req.open("GET", url);
     req.send();
 }
@@ -50,15 +45,12 @@ function getInfo(e) {
     console.log(e.target.textContent);
     try {
         fetchUserData(req, baseApi, e.target.textContent);
-
     } catch (error) {
         console.log(error)
     }
-
 }
 
 function fetchUserData(req, url, userName) {
-    // var userReq = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             var personData = JSON.parse(req.response);
