@@ -12,6 +12,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    cursor: pointer;
 }
 
 .app .app-content .app-title {
@@ -51,4 +52,24 @@
     height: 450px;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+#box-popup #popup #close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#box-popup #popup #left,
+#box-popup #popup #right {
+    margin: 0 5px;
+}
+
+#box-popup #popup i {
+    color: #f00;
+    cursor: pointer;
 }
